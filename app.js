@@ -27,6 +27,8 @@ document.getElementById('newResBtn').addEventListener('click', () => {
   currentRes = newRes;
   fillDetails(newRes);
   document.getElementById('detailsForm').classList.remove('hidden');
+  document.getElementById('overviewView').classList.add('hidden');
+  document.getElementById('detailView').classList.remove('hidden');
 });
 
 document.getElementById('zoekForm').addEventListener('submit', (e) => {
@@ -42,6 +44,8 @@ document.getElementById('zoekForm').addEventListener('submit', (e) => {
   currentRes = res;
   fillDetails(res);
   document.getElementById('detailsForm').classList.remove('hidden');
+  document.getElementById('overviewView').classList.add('hidden');
+  document.getElementById('detailView').classList.remove('hidden');
 });
 
 document.getElementById('checkinBtn').addEventListener('click', () => {
@@ -49,9 +53,7 @@ document.getElementById('checkinBtn').addEventListener('click', () => {
     currentRes.status = 'Ingecheckt';
     saveData();
     fillDetails(currentRes);
-    document.getElementById('overviewBtn').click();
-    window.scrollTo(0,0);
-    document.getElementById('overviewBtn').click();
+    showOverview();
     window.scrollTo(0,0);
   }
 });
@@ -61,7 +63,7 @@ document.getElementById('checkoutBtn').addEventListener('click', () => {
     currentRes.status = 'Uitgecheckt';
     saveData();
     fillDetails(currentRes);
-    document.getElementById('overviewBtn').click();
+    showOverview();
     window.scrollTo(0,0);
   }
 });
@@ -145,7 +147,11 @@ document.getElementById('closeAdmin').addEventListener('click', () => {
 });
 
 document.getElementById('overviewBtn').addEventListener('click', () => {
-  const rightCol = document.querySelector('.right-col');
+  showOverview();
+});
+
+function showOverview() {
+  const overviewDiv = document.getElementById('overviewView');
   let html = '<h2>Alle reserveringen</h2>';
   if (Object.keys(hotelData).length === 0) {
     html += '<p>Geen reserveringen gevonden.</p>';
@@ -167,8 +173,10 @@ document.getElementById('overviewBtn').addEventListener('click', () => {
     });
     html += '</table>';
   }
-  document.getElementById('rightContent').innerHTML = html;
-});
+  overviewDiv.innerHTML = html;
+  document.getElementById('detailView').classList.add('hidden');
+  overviewDiv.classList.remove('hidden');
+}
 
 function fillDetails(res) {
   document.getElementById('resNumDisplay').textContent = "Reserveringsnummer: " + res.reserveringsnummer;
@@ -307,8 +315,8 @@ document.getElementById('importDataInput').addEventListener('change', (event) =>
         localStorage.setItem('kamerPrijzen', JSON.stringify(kamerPrijzen));
       }
       document.getElementById('adminModal').classList.add('hidden');
-      document.getElementById('overviewBtn').click();
-    window.scrollTo(0,0);
+      showOverview();
+      window.scrollTo(0,0);
     } catch (error) {
       console.error('Fout bij importeren:', error);
     }
