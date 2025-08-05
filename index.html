@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Reserveringssysteem</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header id="hotelHeader">
+    <img id="hotelLogo" src="logos/logo_beach.png" alt="Hotel Logo">
+    <h1 id="hotelName">Beach Resort</h1>
+  </header>
+
+  <main id="app">
+    
+
+    <section id="systeem" class="hidden">
+      <div class="columns">
+        <div class="left-col">
+          <h2>Menu</h2>
+          <button type="button" id="newResBtn">Nieuwe reservering</button>
+          <form id="zoekForm">
+            <label>Reserveringsnummer of naam:<br>
+              <input type="text" id="zoekTerm">
+            </label>
+            <button type="submit">Zoeken</button>
+          </form>
+          <nav class="menu-nav">
+            <button type="button" id="overviewBtn">Overzicht reserveringen</button>
+            <button type="button" id="adminBtn">Administratie</button>
+          </nav>
+        </div>
+        <div class="right-col"><div id="rightContent">
+          <h2>Reserveringsgegevens</h2>
+          <form id="detailsForm" class="hidden">
+            <div id="resNumDisplay"></div>
+            <label>Naam:<br><input type="text" id="naam"></label>
+            <label>Aantal gasten:<br><input type="number" id="gasten" min="1" max="6"></label>
+            <label>Aantal nachten:<br><input type="number" id="nachten" min="1" max="30"></label>
+            <label>Kamernummer:<br><input type="text" id="kamerpas"></label>
+            <label>Type kamer:<br>
+              <input type="text" id="kamer" readonly>
+              <button type="button" id="selectKamerBtn">Selecteren</button>
+              <button type="button" id="upgradeBtn">Upgrade</button>
+            </label>
+            <label>Etage:<br><input type="number" id="etage" min="1" max="20"></label>
+            <label>Paspoort/ID nummer:<br><input type="text" id="idNummer" placeholder="NL1234567"></label>
+            <label>Creditcard nummer:<br><input type="text" id="ccNummer" placeholder="1234 5678 9012 3456"></label>
+            <p>Status: <span id="status"></span></p>
+            <div id="bedragDisplay"></div>
+            <div class="buttons">
+              <button type="button" id="checkinBtn">Inchecken</button>
+              <button type="button" id="checkoutBtn">Uitchecken</button>
+              <button type="submit">Opslaan</button>
+            </div>
+          </form>
+        </div></div>
+    </section>
+  </main>
+
+  <div id="kamerSelectModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Selecteer kamer</h3>
+      <table id="kamerSelectTable"></table>
+      <button id="closeKamerSelect">Sluiten</button>
+    </div>
+  </div>
+
+  <div id="upgradeModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Kies een nieuwe kamer</h3>
+      <select id="upgradeSelect"></select>
+      <button id="confirmUpgrade">Bevestigen</button>
+      <button id="cancelUpgrade">Annuleren</button>
+    </div>
+  </div>
+
+  <div id="adminModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Administratie - Kamerprijzen en Beschrijvingen</h3>
+      <table id="adminTable"></table>
+      <button id="saveAdmin">Opslaan</button>
+      <hr><button id="exportDataBtn">💾 Gegevens opslaan (Export)</button><input type="file" id="importDataInput" accept=".json" style="display:none"><button id="importDataBtn">📂 Gegevens laden (Import)</button><button id="closeAdmin">Sluiten</button>
+    </div>
+  </div>
+</body>
+</html>
