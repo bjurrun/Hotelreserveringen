@@ -6,6 +6,7 @@
   <title>Hotel Reserveringssysteem</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -21,16 +22,16 @@
       <div class="columns">
         <div class="left-col">
           <h2>Menu</h2>
-          <button type="button" id="newResBtn">Nieuwe reservering</button>
+          <button type="button" id="newResBtn"><span class="material-icons">add</span> Nieuwe reservering</button>
           <form id="zoekForm">
             <label>Reserveringsnummer of naam:<br>
               <input type="text" id="zoekTerm">
             </label>
-            <button type="submit">Zoeken</button>
+            <button type="submit"><span class="material-icons">search</span> Zoeken</button>
           </form>
           <nav class="menu-nav">
-            <button type="button" id="overviewBtn">Overzicht reserveringen</button>
-            <button type="button" id="adminBtn">Administratie</button>
+            <button type="button" id="overviewBtn"><span class="material-icons">list</span> Overzicht reserveringen</button>
+            <button type="button" id="adminBtn"><span class="material-icons">settings</span> Administratie</button>
           </nav>
         </div>
         <div class="right-col">
@@ -45,18 +46,19 @@
             <label>Kamernummer:<br><input type="text" id="kamerpas"></label>
             <label>Type kamer:<br>
               <input type="text" id="kamer" readonly>
-              <button type="button" id="selectKamerBtn">Selecteren</button>
-              <button type="button" id="upgradeBtn">Upgrade</button>
+              <button type="button" id="selectKamerBtn"><span class="material-icons">search</span> Selecteren</button>
+              <button type="button" id="upgradeBtn"><span class="material-icons">upgrade</span> Upgrade</button>
             </label>
             <label>Etage:<br><input type="number" id="etage" min="1" max="20"></label>
+            <label>Aankomst:<br><input type="date" id="aankomst"></label>
             <label>Paspoort/ID nummer:<br><input type="text" id="idNummer" placeholder="NL1234567"></label>
             <label>Creditcard nummer:<br><input type="text" id="ccNummer" placeholder="1234 5678 9012 3456"></label>
             <p>Status: <span id="status"></span></p>
             <div id="bedragDisplay"></div>
             <div class="buttons">
-              <button type="button" id="checkinBtn">Inchecken</button>
-              <button type="button" id="checkoutBtn">Uitchecken</button>
-              <button type="submit">Opslaan</button>
+              <button type="button" id="checkinBtn"><span class="material-icons">login</span> Inchecken</button>
+              <button type="button" id="checkoutBtn"><span class="material-icons">logout</span> Uitchecken</button>
+              <button type="submit"><span class="material-icons">save</span> Opslaan</button>
             </div>
               </form>
             </div>
@@ -70,7 +72,7 @@
     <div class="modal-content">
       <h3>Selecteer kamer</h3>
       <table id="kamerSelectTable"></table>
-      <button id="closeKamerSelect">Sluiten</button>
+      <button id="closeKamerSelect"><span class="material-icons">close</span> Sluiten</button>
     </div>
   </div>
 
@@ -78,8 +80,8 @@
     <div class="modal-content">
       <h3>Kies een nieuwe kamer</h3>
       <select id="upgradeSelect"></select>
-      <button id="confirmUpgrade">Bevestigen</button>
-      <button id="cancelUpgrade">Annuleren</button>
+      <button id="confirmUpgrade"><span class="material-icons">check</span> Bevestigen</button>
+      <button id="cancelUpgrade"><span class="material-icons">cancel</span> Annuleren</button>
     </div>
   </div>
 
@@ -87,8 +89,8 @@
     <div class="modal-content">
       <h3>Administratie - Kamerprijzen en Beschrijvingen</h3>
       <table id="adminTable"></table>
-      <button id="saveAdmin">Opslaan</button>
-      <hr><button id="exportDataBtn">💾 Gegevens opslaan (Export)</button><input type="file" id="importDataInput" accept=".json" style="display:none"><button id="importDataBtn">📂 Gegevens laden (Import)</button><button id="closeAdmin">Sluiten</button>
+      <button id="saveAdmin"><span class="material-icons">save</span> Opslaan</button>
+      <hr><button id="exportDataBtn"><span class="material-icons">save_alt</span> Gegevens opslaan (Export)</button><input type="file" id="importDataInput" accept=".json" style="display:none"><button id="importDataBtn"><span class="material-icons">folder_open</span> Gegevens laden (Import)</button><button id="closeAdmin"><span class="material-icons">close</span> Sluiten</button>
     </div>
   </div>
 </body>

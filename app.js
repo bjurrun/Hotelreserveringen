@@ -50,6 +50,7 @@ document.getElementById('zoekForm').addEventListener('submit', (e) => {
 
 document.getElementById('checkinBtn').addEventListener('click', () => {
   if (currentRes) {
+    updateCurrentResFromForm();
     currentRes.status = 'Ingecheckt';
     saveData();
     fillDetails(currentRes);
@@ -60,6 +61,7 @@ document.getElementById('checkinBtn').addEventListener('click', () => {
 
 document.getElementById('checkoutBtn').addEventListener('click', () => {
   if (currentRes) {
+    updateCurrentResFromForm();
     currentRes.status = 'Uitgecheckt';
     saveData();
     fillDetails(currentRes);
@@ -71,15 +73,7 @@ document.getElementById('checkoutBtn').addEventListener('click', () => {
 document.getElementById('detailsForm').addEventListener('submit', (e) => {
   e.preventDefault();
   if (currentRes) {
-    currentRes.naam = document.getElementById('naam').value;
-    currentRes.gasten = parseInt(document.getElementById('gasten').value) || "";
-    currentRes.nachten = parseInt(document.getElementById('nachten').value) || "";
-    currentRes.kamer = document.getElementById('kamer').value;
-    currentRes.etage = parseInt(document.getElementById('etage').value) || "";
-    currentRes.idNummer = document.getElementById('idNummer').value;
-    currentRes.ccNummer = document.getElementById('ccNummer').value;
-    currentRes.kamerpas = document.getElementById('kamerpas').value;
-    updateBedrag();
+    updateCurrentResFromForm();
     saveData();
   }
 });
@@ -147,8 +141,26 @@ document.getElementById('closeAdmin').addEventListener('click', () => {
 });
 
 document.getElementById('overviewBtn').addEventListener('click', () => {
+  if (currentRes) {
+    updateCurrentResFromForm();
+    saveData();
+  }
   showOverview();
 });
+
+function updateCurrentResFromForm() {
+  if (!currentRes) return;
+  currentRes.naam = document.getElementById('naam').value;
+  currentRes.gasten = parseInt(document.getElementById('gasten').value) || "";
+  currentRes.nachten = parseInt(document.getElementById('nachten').value) || "";
+  currentRes.kamer = document.getElementById('kamer').value;
+  currentRes.etage = parseInt(document.getElementById('etage').value) || "";
+  currentRes.idNummer = document.getElementById('idNummer').value;
+  currentRes.ccNummer = document.getElementById('ccNummer').value;
+  currentRes.kamerpas = document.getElementById('kamerpas').value;
+  currentRes.aankomst = document.getElementById('aankomst').value;
+  updateBedrag();
+}
 
 function showOverview() {
   const overviewDiv = document.getElementById('overviewView');
@@ -163,7 +175,7 @@ function showOverview() {
       html += `<tr>
         <td>${res.reserveringsnummer}</td>
         <td>${res.naam}</td>
-        <td>${res.kamerpas}</td>
+        <td>${res.kamerpas || res.kamer || ''}</td>
         <td>${res.etage || ''}</td>
         <td>${res.aankomst || ''}</td>
         <td>${res.nachten || ''}</td>
@@ -185,6 +197,7 @@ function fillDetails(res) {
   document.getElementById('nachten').value = res.nachten;
   document.getElementById('kamer').value = res.kamer;
   document.getElementById('etage').value = res.etage || '';
+  document.getElementById('aankomst').value = res.aankomst || '';
   document.getElementById('idNummer').value = res.idNummer || '';
   document.getElementById('ccNummer').value = res.ccNummer || '';
   document.getElementById('kamerpas').value = res.kamerpas || '';
