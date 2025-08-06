@@ -10,6 +10,32 @@ let currentRes = null;
 let currentHotel = null;
 let medewerkerNaam = localStorage.getItem('medewerkerNaam') || '';
 
+function setupPersistentPlaceholder(input, placeholder) {
+  function apply() {
+    if (!input.value) {
+      input.value = placeholder;
+      input.classList.add('placeholder-active');
+    } else if (input.value === placeholder) {
+      input.classList.add('placeholder-active');
+    } else {
+      input.classList.remove('placeholder-active');
+    }
+  }
+  input.addEventListener('focus', () => {
+    if (input.classList.contains('placeholder-active')) {
+      input.value = '';
+      input.classList.remove('placeholder-active');
+    }
+  });
+  input.addEventListener('blur', apply);
+  return { apply };
+}
+
+const idInput = document.getElementById('idNummer');
+const ccInput = document.getElementById('ccNummer');
+const idPlaceholder = setupPersistentPlaceholder(idInput, 'NL1234567');
+const ccPlaceholder = setupPersistentPlaceholder(ccInput, '1234 5678 9012 3456');
+
 window.addEventListener('DOMContentLoaded', () => {
   currentHotel = 'beach';
   document.body.classList.add(currentHotel);
@@ -22,6 +48,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // locatie-keuze verwijderd
   document.getElementById('systeem').classList.remove('hidden');
   document.getElementById('employeeNameDisplay').textContent = medewerkerNaam || 'Naam medewerker';
+  idPlaceholder.apply();
+  ccPlaceholder.apply();
 });
 
 document.getElementById('newResBtn').addEventListener('click', () => {
@@ -161,8 +189,8 @@ function updateCurrentResFromForm() {
   currentRes.nachten = parseInt(document.getElementById('nachten').value) || "";
   currentRes.kamer = document.getElementById('kamer').value;
   currentRes.etage = parseInt(document.getElementById('etage').value) || "";
-  currentRes.idNummer = document.getElementById('idNummer').value;
-  currentRes.ccNummer = document.getElementById('ccNummer').value;
+  currentRes.idNummer = idInput.classList.contains('placeholder-active') ? '' : idInput.value;
+  currentRes.ccNummer = ccInput.classList.contains('placeholder-active') ? '' : ccInput.value;
   currentRes.kamerpas = document.getElementById('kamerpas').value;
   currentRes.aankomst = document.getElementById('aankomst').value;
   updateBedrag();
@@ -179,7 +207,7 @@ function showOverview() {
       const prijs = kamerPrijzen[res.kamer] ? kamerPrijzen[res.kamer].prijs : 0;
       const bedrag = res.nachten && prijs ? prijs * res.nachten : 0;
       html += `<tr>
-        <td>${res.reserveringsnummer}</td>
+        <td><a href="#" class="res-link" data-res="${res.reserveringsnummer}">${res.reserveringsnummer}</a></td>
         <td>${res.naam}</td>
         <td>${res.kamerpas || res.kamer || ''}</td>
         <td>${res.etage || ''}</td>
@@ -192,6 +220,19 @@ function showOverview() {
     html += '</table>';
   }
   overviewDiv.innerHTML = html;
+  overviewDiv.querySelectorAll('.res-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const res = hotelData[link.dataset.res];
+      if (res) {
+        currentRes = res;
+        fillDetails(res);
+        document.getElementById('detailsForm').classList.remove('hidden');
+        overviewDiv.classList.add('hidden');
+        document.getElementById('detailView').classList.remove('hidden');
+      }
+    });
+  });
   document.getElementById('detailView').classList.add('hidden');
   overviewDiv.classList.remove('hidden');
 }
@@ -204,10 +245,12 @@ function fillDetails(res) {
   document.getElementById('kamer').value = res.kamer;
   document.getElementById('etage').value = res.etage || '';
   document.getElementById('aankomst').value = res.aankomst || '';
-  document.getElementById('idNummer').value = res.idNummer || '';
-  document.getElementById('ccNummer').value = res.ccNummer || '';
+  idInput.value = res.idNummer || '';
+  ccInput.value = res.ccNummer || '';
   document.getElementById('kamerpas').value = res.kamerpas || '';
   document.getElementById('status').textContent = res.status;
+  idPlaceholder.apply();
+  ccPlaceholder.apply();
   updateBedrag();
 }
 
