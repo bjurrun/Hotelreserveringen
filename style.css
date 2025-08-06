@@ -4,7 +4,7 @@ header img { height:50px; margin-right:1em; }
 .header-left { display:flex; align-items:center; }
 .header-right { display:flex; align-items:center; gap:1em; }
 .header-right button { width:auto; }
-#userInfo { display:flex; align-items:center; gap:0.3em; }
+#userInfo { display:flex; align-items:center; gap:0.3em; cursor:pointer; }
 .columns { display:flex; gap:1em; padding:1em; }
 .left-col, .right-col { flex:1; background:#f9f9f9; padding:1em; border-radius:4px; }
 .menu-nav { margin-top:2em; display:flex; flex-direction:column; gap:0.5em; }
@@ -66,3 +66,18 @@ input.placeholder-active {
 
 /* Bedrag kader */
 #bedragDisplay { background: #fffae6; padding: 0.5em; margin-top: 0.5em; border: 2px solid #ffd700; font-weight: bold; }
+
+/* Randomizer buttons inline */
+label.with-rand input { width: calc(100% - 50px); display:inline-block; }
+label.with-rand button { width:40px; margin-left:4px; background:#ffeb3b; color:black; display:inline-flex; }
+
+/* Kamer type buttons inline */
+label.kamer-type input { width: calc(100% - 110px); display:inline-block; }
+label.kamer-type button { width:auto; margin-left:4px; display:inline-flex; }
+
+/* Action buttons in one row */
+.buttons { display:flex; gap:0.5em; }
+.buttons button { width:auto; flex:1; }
+
+/* Kamerselectie tabel spacing */
+#kamerSelectTable td { padding:0.8em 0.5em; }
