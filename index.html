@@ -36,7 +36,6 @@
           </form>
           <nav class="menu-nav">
             <button type="button" id="overviewBtn"><span class="material-icons">list</span> Overzicht reserveringen</button>
-            <button type="button" id="adminBtn"><span class="material-icons">settings</span> Administratie</button>
           </nav>
         </div>
         <div class="right-col">
@@ -45,22 +44,24 @@
               <h2>Reserveringsgegevens</h2>
               <form id="detailsForm" class="hidden">
               <div id="resNumDisplay"></div>
-              <label>Naam:<br><input type="text" id="naam"><button type="button" id="randomNaamBtn"><span class="material-icons">shuffle</span></button></label>
+              <label class="with-rand">Naam:<br><input type="text" id="naam"><button type="button" id="randomNaamBtn" class="random-btn"><span class="material-icons">shuffle</span></button></label>
             <label>Aantal gasten:<br><input type="number" id="gasten" min="1" max="6"></label>
             <label>Aantal nachten:<br><input type="number" id="nachten" min="1" max="30"></label>
             <label>Kamernummer:<br><input type="text" id="kamerpas"></label>
-            <label>Type kamer:<br>
+            <label class="kamer-type">Type kamer:<br>
               <input type="text" id="kamer" readonly>
               <button type="button" id="selectKamerBtn"><span class="material-icons">search</span> Selecteren</button>
               <button type="button" id="upgradeBtn"><span class="material-icons">upgrade</span> Upgrade</button>
             </label>
             <label>Etage:<br><input type="number" id="etage" min="1" max="20"></label>
             <label>Aankomst:<br><input type="date" id="aankomst"></label>
-              <label>Paspoort/ID nummer:<br><input type="text" id="idNummer" placeholder="NL1234567"><button type="button" id="randomIdBtn"><span class="material-icons">shuffle</span></button></label>
-              <label>Creditcard nummer:<br><input type="text" id="ccNummer" placeholder="1234 5678 9012 3456"><button type="button" id="randomCcBtn"><span class="material-icons">shuffle</span></button></label>
+              <label class="with-rand">Paspoort/ID nummer:<br><input type="text" id="idNummer" placeholder="NL1234567"><button type="button" id="randomIdBtn" class="random-btn"><span class="material-icons">shuffle</span></button></label>
+              <label class="with-rand">Creditcard nummer:<br><input type="text" id="ccNummer" placeholder="1234 5678 9012 3456"><button type="button" id="randomCcBtn" class="random-btn"><span class="material-icons">shuffle</span></button></label>
               <label>Kortingscode:<br><input type="text" id="kortingscode"></label>
             <p>Status: <span id="status"></span></p>
             <div id="bedragDisplay"></div>
+            <label>Extra’s:<br><input type="number" id="extraBedrag" min="0" step="0.01"></label>
+            <div id="totaalDisplay"></div>
             <div class="buttons">
               <button type="button" id="checkinBtn"><span class="material-icons">login</span> Inchecken</button>
               <button type="button" id="checkoutBtn"><span class="material-icons">logout</span> Uitchecken</button>
