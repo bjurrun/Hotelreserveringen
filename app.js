@@ -6,6 +6,7 @@ let kamerPrijzen = JSON.parse(localStorage.getItem('kamerPrijzen')) || {
   "Suite": { prijs: 200, beschrijving: "Suite met aparte woonkamer en grote badkamer" },
   "Penthouse": { prijs: 300, beschrijving: "Penthouse met panoramisch uitzicht over de stad" }
 };
+let kortingsCodes = JSON.parse(localStorage.getItem('kortingsCodes')) || {};
 let currentRes = null;
 let currentHotel = null;
 let medewerkerNaam = localStorage.getItem('medewerkerNaam') || '';
@@ -35,6 +36,18 @@ const idInput = document.getElementById('idNummer');
 const ccInput = document.getElementById('ccNummer');
 const idPlaceholder = setupPersistentPlaceholder(idInput, 'NL1234567');
 const ccPlaceholder = setupPersistentPlaceholder(ccInput, '1234 5678 9012 3456');
+document.getElementById('randomNaamBtn').addEventListener('click', () => {
+  document.getElementById('naam').value = randomName();
+});
+document.getElementById('randomIdBtn').addEventListener('click', () => {
+  idInput.value = randomPassport();
+  idInput.classList.remove('placeholder-active');
+});
+document.getElementById('randomCcBtn').addEventListener('click', () => {
+  ccInput.value = randomCC();
+  ccInput.classList.remove('placeholder-active');
+});
+document.getElementById('kortingscode').addEventListener('input', updateBedrag);
 
 window.addEventListener('DOMContentLoaded', () => {
   currentHotel = 'beach';
@@ -144,6 +157,16 @@ function openKamerSelectie() {
   document.getElementById('kamerSelectModal').classList.remove('hidden');
 }
 
+function addDiscountRow(code, amount) {
+  const table = document.getElementById('discountTable');
+  const row = document.createElement('tr');
+  row.innerHTML = `<td><input type="text" class="kortingCode" value="${code}"></td>` +
+    `<td><input type="number" class="kortingAmount" value="${amount}"></td>` +
+    `<td><button type="button" class="removeDiscount"><span class="material-icons">delete</span></button></td>`;
+  table.appendChild(row);
+  row.querySelector('.removeDiscount').addEventListener('click', () => row.remove());
+}
+
 document.getElementById('adminBtn').addEventListener('click', () => {
   const table = document.getElementById('adminTable');
   table.innerHTML = '<tr><th>Kamer</th><th>Prijs</th><th>Beschrijving</th></tr>';
@@ -154,8 +177,17 @@ document.getElementById('adminBtn').addEventListener('click', () => {
       <td><input type="text" id="beschrijving_${type}" value="${kamerPrijzen[type].beschrijving}"></td>`;
     table.appendChild(row);
   });
+  const dTable = document.getElementById('discountTable');
+  dTable.innerHTML = '<tr><th>Kortingscode</th><th>Bedrag</th><th></th></tr>';
+  Object.keys(kortingsCodes).forEach(code => {
+    addDiscountRow(code, kortingsCodes[code]);
+  });
   document.getElementById('adminUserName').value = medewerkerNaam;
   document.getElementById('adminModal').classList.remove('hidden');
+});
+
+document.getElementById('addDiscountBtn').addEventListener('click', () => {
+  addDiscountRow('', '');
 });
 
 document.getElementById('saveAdmin').addEventListener('click', () => {
@@ -164,6 +196,16 @@ document.getElementById('saveAdmin').addEventListener('click', () => {
     kamerPrijzen[type].beschrijving = document.getElementById(`beschrijving_${type}`).value;
   });
   localStorage.setItem('kamerPrijzen', JSON.stringify(kamerPrijzen));
+  kortingsCodes = {};
+  document.querySelectorAll('#discountTable tr').forEach((row, index) => {
+    if (index === 0) return;
+    const code = row.querySelector('.kortingCode').value.trim();
+    const amount = parseInt(row.querySelector('.kortingAmount').value);
+    if (code && amount) {
+      kortingsCodes[code] = amount;
+    }
+  });
+  localStorage.setItem('kortingsCodes', JSON.stringify(kortingsCodes));
   medewerkerNaam = document.getElementById('adminUserName').value.trim();
   localStorage.setItem('medewerkerNaam', medewerkerNaam);
   document.getElementById('employeeNameDisplay').textContent = medewerkerNaam || 'Naam medewerker';
@@ -193,6 +235,7 @@ function updateCurrentResFromForm() {
   currentRes.ccNummer = ccInput.classList.contains('placeholder-active') ? '' : ccInput.value;
   currentRes.kamerpas = document.getElementById('kamerpas').value;
   currentRes.aankomst = document.getElementById('aankomst').value;
+  currentRes.kortingscode = document.getElementById('kortingscode').value.trim();
   updateBedrag();
 }
 
@@ -205,7 +248,9 @@ function showOverview() {
     html += '<table border="1" cellpadding="5" cellspacing="0"><tr><th>Reserveringsnummer</th><th>Naam</th><th>Kamer</th><th>Etage</th><th>Aankomst</th><th>Nachten</th><th>Bedrag</th><th>Status</th></tr>';
     Object.values(hotelData).forEach(res => {
       const prijs = kamerPrijzen[res.kamer] ? kamerPrijzen[res.kamer].prijs : 0;
-      const bedrag = res.nachten && prijs ? prijs * res.nachten : 0;
+      const base = res.nachten && prijs ? prijs * res.nachten : 0;
+      const discount = res.kortingscode && kortingsCodes[res.kortingscode] ? kortingsCodes[res.kortingscode] : 0;
+      const bedrag = Math.max(0, base - discount);
       html += `<tr>
         <td><a href="#" class="res-link" data-res="${res.reserveringsnummer}">${res.reserveringsnummer}</a></td>
         <td>${res.naam}</td>
@@ -247,6 +292,7 @@ function fillDetails(res) {
   document.getElementById('aankomst').value = res.aankomst || '';
   idInput.value = res.idNummer || '';
   ccInput.value = res.ccNummer || '';
+  document.getElementById('kortingscode').value = res.kortingscode || '';
   document.getElementById('kamerpas').value = res.kamerpas || '';
   document.getElementById('status').textContent = res.status;
   idPlaceholder.apply();
@@ -258,7 +304,10 @@ function updateBedrag() {
   const kamerType = document.getElementById('kamer').value;
   const nachten = parseInt(document.getElementById('nachten').value);
   const prijs = kamerPrijzen[kamerType] ? kamerPrijzen[kamerType].prijs : 0;
-  const bedrag = (nachten && prijs) ? prijs * nachten : 0;
+  const base = (nachten && prijs) ? prijs * nachten : 0;
+  const code = document.getElementById('kortingscode').value.trim();
+  const discount = kortingsCodes[code] || 0;
+  const bedrag = Math.max(0, base - discount);
   document.getElementById('bedragDisplay').textContent = "Bedrag: € " + bedrag + ",-";
 }
 
@@ -317,9 +366,10 @@ function generateReservation(num) {
     ccNummer: randomCC(),
     kamerpas: randomRoom(etage),
     aankomst: randomArrivalDate(),
-    status: "Gereserveerd"
-  };
-}
+      status: "Gereserveerd",
+      kortingscode: ""
+    };
+  }
 
 function generateBlankReservation() {
   const resNum = generateReservationNumber();
@@ -333,17 +383,19 @@ function generateBlankReservation() {
     idNummer: "",
     ccNummer: "",
     kamerpas: "",
-    aankomst: "",
-    status: "Gereserveerd"
-  };
-}
+      aankomst: "",
+      status: "Gereserveerd",
+      kortingscode: ""
+    };
+  }
 
 
 // ===== Export functionaliteit =====
 document.getElementById('exportDataBtn').addEventListener('click', () => {
   const data = {
     reserveringen: hotelData,
-    kamerPrijzen: kamerPrijzen
+    kamerPrijzen: kamerPrijzen,
+    kortingsCodes: kortingsCodes
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const today = new Date().toISOString().split('T')[0];
@@ -375,6 +427,10 @@ document.getElementById('importDataInput').addEventListener('change', (event) =>
       if (importedData.kamerPrijzen) {
         kamerPrijzen = importedData.kamerPrijzen;
         localStorage.setItem('kamerPrijzen', JSON.stringify(kamerPrijzen));
+      }
+      if (importedData.kortingsCodes) {
+        kortingsCodes = importedData.kortingsCodes;
+        localStorage.setItem('kortingsCodes', JSON.stringify(kortingsCodes));
       }
       document.getElementById('adminModal').classList.add('hidden');
       showOverview();
