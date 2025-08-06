@@ -8,6 +8,7 @@ let kamerPrijzen = JSON.parse(localStorage.getItem('kamerPrijzen')) || {
 };
 let currentRes = null;
 let currentHotel = null;
+let medewerkerNaam = localStorage.getItem('medewerkerNaam') || '';
 
 window.addEventListener('DOMContentLoaded', () => {
   currentHotel = 'beach';
@@ -20,6 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (currentHotel === 'beach') name.textContent = 'Beach Resort';
   // locatie-keuze verwijderd
   document.getElementById('systeem').classList.remove('hidden');
+  document.getElementById('employeeNameDisplay').textContent = medewerkerNaam || 'Naam medewerker';
 });
 
 document.getElementById('newResBtn').addEventListener('click', () => {
@@ -124,6 +126,7 @@ document.getElementById('adminBtn').addEventListener('click', () => {
       <td><input type="text" id="beschrijving_${type}" value="${kamerPrijzen[type].beschrijving}"></td>`;
     table.appendChild(row);
   });
+  document.getElementById('adminUserName').value = medewerkerNaam;
   document.getElementById('adminModal').classList.remove('hidden');
 });
 
@@ -133,6 +136,9 @@ document.getElementById('saveAdmin').addEventListener('click', () => {
     kamerPrijzen[type].beschrijving = document.getElementById(`beschrijving_${type}`).value;
   });
   localStorage.setItem('kamerPrijzen', JSON.stringify(kamerPrijzen));
+  medewerkerNaam = document.getElementById('adminUserName').value.trim();
+  localStorage.setItem('medewerkerNaam', medewerkerNaam);
+  document.getElementById('employeeNameDisplay').textContent = medewerkerNaam || 'Naam medewerker';
   document.getElementById('adminModal').classList.add('hidden');
 });
 
