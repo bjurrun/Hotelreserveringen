@@ -150,9 +150,9 @@ label.kamer-type input { display:none; }
   cursor:pointer;
 }
 .kamer-pills .kamer-pill.active {
-  background:#ccc;
+  background:#00bfa5;
   color:#fff;
-  border:1px solid #ccc;
+  border:1px solid #00bfa5;
 }
 
 /* Action buttons in one row */
