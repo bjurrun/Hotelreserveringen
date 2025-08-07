@@ -141,18 +141,18 @@ label.with-calc button { width:40px; margin-left:4px; display:inline-flex; }
 label.kamer-type .kamer-pills { display:flex; gap:0.5em; flex-wrap:wrap; margin-top:0.3em; }
 label.kamer-type button { width:auto; margin-left:4px; display:inline-flex; }
 label.kamer-type input { display:none; }
-.kamer-pill {
+.kamer-pills .kamer-pill {
   border-radius:20px;
   padding:0.3em 0.8em;
-  border:1px solid #999;
-  background:#f3f3f3;
-  color:#666;
+  border:1px solid #ccc;
+  background:#fff;
+  color:#ccc;
   cursor:pointer;
 }
-.kamer-pill.active {
-  background:#f3f3f3;
-  color:white;
-  border:1px solid #f3f3f3;
+.kamer-pills .kamer-pill.active {
+  background:#ccc;
+  color:#fff;
+  border:1px solid #ccc;
 }
 
 /* Action buttons in one row */
