@@ -109,16 +109,11 @@ document.getElementById('newResBtn').addEventListener('click', () => {
   document.getElementById('detailView').classList.remove('hidden');
 });
 
-const searchContainer = document.getElementById('searchContainer');
-const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
 
 function performSearch() {
   const term = searchInput.value.trim();
-  if (!term) {
-    searchContainer.classList.remove('active');
-    return;
-  }
+  if (!term) return;
   const res = hotelData[term] || Object.values(hotelData).find(r => r.reserveringsnummer === term || r.naam.toLowerCase() === term.toLowerCase());
   if (res) {
     currentRes = res;
@@ -128,17 +123,7 @@ function performSearch() {
     document.getElementById('detailView').classList.remove('hidden');
   }
   searchInput.value = '';
-  searchContainer.classList.remove('active');
 }
-
-searchBtn.addEventListener('click', () => {
-  if (!searchContainer.classList.contains('active')) {
-    searchContainer.classList.add('active');
-    searchInput.focus();
-  } else {
-    performSearch();
-  }
-});
 
 searchInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {

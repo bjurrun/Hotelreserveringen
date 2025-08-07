@@ -8,8 +8,8 @@ header img { height:50px; margin-right:1em; }
 .header-right button { width:auto; }
 #userInfo { display:flex; align-items:center; gap:0.3em; cursor:pointer; flex:0 0 150px; overflow:hidden; }
 .columns { display:flex; gap:1em; padding:1em; margin:0 5%; }
-.left-col { flex:0 0 33%; background:#f9f9f9; padding:1em; border-radius:4px; }
-.right-col { flex:0 0 67%; background:#f9f9f9; padding:1em; border-radius:4px; }
+.left-col { flex:0 0 33%; padding:1em; border-radius:4px; }
+.right-col { flex:0 0 67%; padding:1em; border-radius:4px; }
 .menu-nav { margin-top:2em; display:flex; flex-direction:column; gap:0.5em; }
 label { display:block; margin-top:0.5em; font-size:1.1em; }
 input, select, button { font-size:1em; padding:0.4em; margin-top:0.3em; width:100%; box-sizing:border-box; }
@@ -57,50 +57,26 @@ body.beach button:hover { background-color: #009e8a; }
   font-size: 2em;
 }
 
-/* Zoek knop in header */
+/* Zoekveld in header */
 #searchContainer {
   display: flex;
   align-items: center;
-  width: 60px;
-  height: 60px;
-  overflow: hidden;
-  transition: width 0.3s;
-}
-#searchBtn {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
   background: white;
-  color: green;
-  padding: 0;
-  flex-shrink: 0;
+  border-radius: 30px;
+  padding: 0 0.5em;
+  height: 60px;
+  gap: 0.5em;
 }
-#searchBtn .material-icons {
+#searchContainer .material-icons {
   color: green;
-  font-size: 2em;
 }
 #searchInput {
-  flex: 1;
-  width: 0;
-  opacity: 0;
-  height: 60px;
+  width: 250px;
+  height: 100%;
   border: none;
+  border-bottom: none;
+  background: transparent;
   padding: 0;
-  transition: width 0.3s, opacity 0.3s;
-}
-#searchContainer.active {
-  width: 67%;
-}
-#searchContainer.active #searchInput {
-  width: 100%;
-  opacity: 1;
-  padding: 0 0.5em;
-  background: white;
-  border: 1px solid #757575;
-  border-radius: 30px 0 0 30px;
-}
-#searchContainer.active #searchBtn {
-  border-radius: 0 30px 30px 0;
 }
 
 /* Rekenmachine */
@@ -121,12 +97,12 @@ body.beach button:hover { background-color: #009e8a; }
 .calc-buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.5em;
+  gap: 0.3em;
   margin-top: 0.5em;
 }
 .calc-buttons button {
   width: 100%;
-  font-size: 1.5em;
+  font-size: 1.2em;
   aspect-ratio: 1 / 1;
 }
 .calc-btn.op {
@@ -146,25 +122,38 @@ input.placeholder-active {
 .hidden { display:none; }
 
 /* Bedrag kader */
-#bedragDisplay, #totaalDisplay { background: #fffae6; padding: 0.5em; margin-top: 0.5em; border: 2px solid #ffd700; font-weight: bold; text-align:right; }
+#bedragDisplay, #totaalDisplay {
+  padding: 0.5em;
+  margin-top: 0.5em;
+  font-weight: bold;
+  text-align: right;
+}
 #totaalDisplay { font-size:1.2em; }
 
 /* Randomizer buttons inline */
 label.with-rand input { width: calc(100% - 50px); display:inline-block; }
 label.with-rand button { width:40px; margin-left:4px; background:#ffeb3b; color:black; display:inline-flex; }
 
-label.with-calc input { width: calc(100% - 50px); display:inline-block; }
+label.with-calc input { width: calc(100% - 50px); display:inline-block; text-align:right; }
 label.with-calc button { width:40px; margin-left:4px; display:inline-flex; }
 
 /* Kamer type buttons inline */
 label.kamer-type .kamer-pills { display:flex; gap:0.5em; flex-wrap:wrap; margin-top:0.3em; }
 label.kamer-type button { width:auto; margin-left:4px; display:inline-flex; }
 label.kamer-type input { display:none; }
-.kamer-pill { border-radius:20px; padding:0.3em 0.8em; border:2px solid currentColor; background:white; color:inherit; cursor:pointer; }
-.kamer-pill.active { background:currentColor; color:white; }
-body.beach .kamer-pill { color:#00bfa5; }
-body.zonnestraal .kamer-pill { color:#ffcc00; }
-body.palace .kamer-pill { color:#d4af37; }
+.kamer-pill {
+  border-radius:20px;
+  padding:0.3em 0.8em;
+  border:1px solid #999;
+  background:#f3f3f3;
+  color:#666;
+  cursor:pointer;
+}
+.kamer-pill.active {
+  background:#f3f3f3;
+  color:white;
+  border:1px solid #f3f3f3;
+}
 
 /* Action buttons in one row */
 .buttons { display:flex; gap:0.5em; }
