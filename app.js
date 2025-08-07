@@ -115,6 +115,10 @@ searchInput.addEventListener('keydown', (e) => {
 });
 
 const calcDisplay = document.getElementById('calcDisplay');
+document.getElementById('applyCalcBtn').addEventListener('click', () => {
+  extraInput.value = calcDisplay.value || 0;
+  extraInput.dispatchEvent(new Event('input'));
+});
 document.querySelectorAll('.calc-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const val = btn.textContent;
@@ -289,7 +293,7 @@ function showOverview() {
   if (Object.keys(hotelData).length === 0) {
     html += '<p>Geen reserveringen gevonden.</p>';
   } else {
-    html += '<table border="1" cellpadding="5" cellspacing="0"><tr><th>Reserveringsnummer</th><th>Naam</th><th>Kamer</th><th>Etage</th><th>Aankomst</th><th>Nachten</th><th>Bedrag</th><th>Extra’s</th><th>Totaal</th><th>Status</th></tr>';
+    html += '<table class="res-table"><tr><th>Reserveringsnummer</th><th>Naam</th><th>Kamer</th><th>Etage</th><th>Aankomst</th><th>Nachten</th><th>Bedrag</th><th>Extra’s</th><th>Totaal</th><th>Status</th></tr>';
     Object.values(hotelData).forEach(res => {
       const prijs = kamerPrijzen[res.kamer] ? kamerPrijzen[res.kamer].prijs : 0;
       const base = res.nachten && prijs ? prijs * res.nachten : 0;

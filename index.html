@@ -7,6 +7,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400&display=swap" rel="stylesheet">
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -16,11 +17,11 @@
       <h1 id="hotelName">Beach Resort</h1>
     </div>
     <div class="header-right">
-      <button type="button" id="newResBtn"><span class="material-icons">add</span></button>
       <div id="searchContainer">
         <input type="text" id="searchInput" placeholder="Zoeken...">
         <button type="button" id="searchBtn"><span class="material-icons">search</span></button>
       </div>
+      <button type="button" id="newResBtn"><span class="material-icons">add</span></button>
       <div id="userInfo"><span class="material-icons">person</span><span id="employeeNameDisplay">Naam medewerker</span></div>
     </div>
   </header>
@@ -38,19 +39,19 @@
               <button class="calc-btn">7</button>
               <button class="calc-btn">8</button>
               <button class="calc-btn">9</button>
-              <button class="calc-btn">/</button>
+              <button class="calc-btn op">/</button>
               <button class="calc-btn">4</button>
               <button class="calc-btn">5</button>
               <button class="calc-btn">6</button>
-              <button class="calc-btn">*</button>
+              <button class="calc-btn op">*</button>
               <button class="calc-btn">1</button>
               <button class="calc-btn">2</button>
               <button class="calc-btn">3</button>
-              <button class="calc-btn">-</button>
+              <button class="calc-btn op">-</button>
               <button class="calc-btn">0</button>
-              <button class="calc-btn">C</button>
-              <button class="calc-btn">=</button>
-              <button class="calc-btn">+</button>
+              <button class="calc-btn op">C</button>
+              <button class="calc-btn op">=</button>
+              <button class="calc-btn op">+</button>
             </div>
           </div>
           <nav class="menu-nav">
@@ -79,7 +80,7 @@
               <label>Kortingscode:<br><input type="text" id="kortingscode"></label>
             <p>Status: <span id="status"></span></p>
             <div id="bedragDisplay"></div>
-            <label>Extra’s:<br><input type="number" id="extraBedrag" min="0" step="0.01"></label>
+            <label class="with-calc">Extra’s:<br><input type="number" id="extraBedrag" min="0" step="0.01"><button type="button" id="applyCalcBtn"><span class="material-icons">calculate</span></button></label>
             <div id="totaalDisplay"></div>
             <div class="buttons">
               <button type="button" id="checkinBtn"><span class="material-icons">login</span> Inchecken</button>
