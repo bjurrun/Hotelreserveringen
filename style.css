@@ -5,8 +5,9 @@ header img { height:50px; margin-right:1em; }
 .header-right { display:flex; align-items:center; gap:1em; }
 .header-right button { width:auto; }
 #userInfo { display:flex; align-items:center; gap:0.3em; cursor:pointer; }
-.columns { display:flex; gap:1em; padding:1em; }
-.left-col, .right-col { flex:1; background:#f9f9f9; padding:1em; border-radius:4px; }
+.columns { display:flex; gap:1em; padding:1em; margin:0 5%; }
+.left-col { flex:0 0 33%; background:#f9f9f9; padding:1em; border-radius:4px; }
+.right-col { flex:0 0 67%; background:#f9f9f9; padding:1em; border-radius:4px; }
 .menu-nav { margin-top:2em; display:flex; flex-direction:column; gap:0.5em; }
 label { display:block; margin-top:0.5em; font-size:1.1em; }
 input, select, button { font-size:1em; padding:0.4em; margin-top:0.3em; width:100%; box-sizing:border-box; }
@@ -55,9 +56,12 @@ body.beach button:hover { background-color: #009e8a; }
 
 /* Zoek knop in header */
 #searchContainer {
-  position: relative;
+  display: flex;
+  align-items: center;
   width: 60px;
   height: 60px;
+  overflow: hidden;
+  transition: width 0.3s;
 }
 #searchBtn {
   width: 60px;
@@ -66,29 +70,31 @@ body.beach button:hover { background-color: #009e8a; }
   background: white;
   color: green;
   padding: 0;
+  flex-shrink: 0;
 }
 #searchBtn .material-icons {
   color: green;
   font-size: 2em;
 }
 #searchInput {
-  position: absolute;
-  right: 60px;
-  top: 0;
+  flex: 1;
   width: 0;
   opacity: 0;
   height: 60px;
   border: none;
   padding: 0;
-  border-radius: 30px 0 0 30px;
   transition: width 0.3s, opacity 0.3s;
 }
+#searchContainer.active {
+  width: 67%;
+}
 #searchContainer.active #searchInput {
-  width: 200px;
+  width: 100%;
   opacity: 1;
   padding: 0 0.5em;
   background: white;
   border: 1px solid #757575;
+  border-radius: 30px 0 0 30px;
 }
 #searchContainer.active #searchBtn {
   border-radius: 0 30px 30px 0;
@@ -104,6 +110,10 @@ body.beach button:hover { background-color: #009e8a; }
   padding: 0.4em;
   border: 1px solid #757575;
   border-radius: 4px;
+  height: 3em;
+  line-height: 3em;
+  font-size: 1.5em;
+  font-family: 'Orbitron', monospace;
 }
 .calc-buttons {
   display: grid;
@@ -113,6 +123,12 @@ body.beach button:hover { background-color: #009e8a; }
 }
 .calc-buttons button {
   width: 100%;
+  font-size: 1.5em;
+  aspect-ratio: 1 / 1;
+}
+.calc-btn.op {
+  background: #ff9800;
+  color: white;
 }
 
 /* Placeholder stijl */
@@ -133,6 +149,9 @@ input.placeholder-active {
 label.with-rand input { width: calc(100% - 50px); display:inline-block; }
 label.with-rand button { width:40px; margin-left:4px; background:#ffeb3b; color:black; display:inline-flex; }
 
+label.with-calc input { width: calc(100% - 50px); display:inline-block; }
+label.with-calc button { width:40px; margin-left:4px; display:inline-flex; }
+
 /* Kamer type buttons inline */
 label.kamer-type input { width: calc(100% - 110px); display:inline-block; }
 label.kamer-type button { width:auto; margin-left:4px; display:inline-flex; }
@@ -143,3 +162,18 @@ label.kamer-type button { width:auto; margin-left:4px; display:inline-flex; }
 
 /* Kamerselectie tabel spacing */
 #kamerSelectTable td { padding:0.8em 0.5em; }
+
+/* Reserveringsoverzicht tabel */
+.res-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+.res-table th, .res-table td {
+  border: 1px solid #ccc;
+  padding: 0.8em;
+  text-align: left;
+}
+body.zonnestraal .res-table th { background-color: #ffcc00; color: black; }
+body.palace .res-table th { background-color: #d4af37; color: black; }
+body.beach .res-table th { background-color: #00bfa5; color: white; }
