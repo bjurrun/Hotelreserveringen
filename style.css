@@ -1,10 +1,12 @@
 body { font-family: Arial, sans-serif; margin:0; padding:0; }
+table { width:100%; table-layout:fixed; }
+th, td { word-wrap:break-word; }
 header { display:flex; align-items:center; justify-content:space-between; padding:1em; color:white; }
 header img { height:50px; margin-right:1em; }
 .header-left { display:flex; align-items:center; }
 .header-right { display:flex; align-items:center; gap:1em; }
 .header-right button { width:auto; }
-#userInfo { display:flex; align-items:center; gap:0.3em; cursor:pointer; }
+#userInfo { display:flex; align-items:center; gap:0.3em; cursor:pointer; flex:0 0 150px; overflow:hidden; }
 .columns { display:flex; gap:1em; padding:1em; margin:0 5%; }
 .left-col { flex:0 0 33%; background:#f9f9f9; padding:1em; border-radius:4px; }
 .right-col { flex:0 0 67%; background:#f9f9f9; padding:1em; border-radius:4px; }
@@ -48,6 +50,7 @@ body.beach button:hover { background-color: #009e8a; }
   background: white;
   color: green;
   padding: 0;
+  flex:0 0 60px;
 }
 #newResBtn .material-icons {
   color: green;
@@ -143,7 +146,8 @@ input.placeholder-active {
 .hidden { display:none; }
 
 /* Bedrag kader */
-#bedragDisplay { background: #fffae6; padding: 0.5em; margin-top: 0.5em; border: 2px solid #ffd700; font-weight: bold; }
+#bedragDisplay, #totaalDisplay { background: #fffae6; padding: 0.5em; margin-top: 0.5em; border: 2px solid #ffd700; font-weight: bold; text-align:right; }
+#totaalDisplay { font-size:1.2em; }
 
 /* Randomizer buttons inline */
 label.with-rand input { width: calc(100% - 50px); display:inline-block; }
@@ -153,8 +157,14 @@ label.with-calc input { width: calc(100% - 50px); display:inline-block; }
 label.with-calc button { width:40px; margin-left:4px; display:inline-flex; }
 
 /* Kamer type buttons inline */
-label.kamer-type input { width: calc(100% - 110px); display:inline-block; }
+label.kamer-type .kamer-pills { display:flex; gap:0.5em; flex-wrap:wrap; margin-top:0.3em; }
 label.kamer-type button { width:auto; margin-left:4px; display:inline-flex; }
+label.kamer-type input { display:none; }
+.kamer-pill { border-radius:20px; padding:0.3em 0.8em; border:2px solid currentColor; background:white; color:inherit; cursor:pointer; }
+.kamer-pill.active { background:currentColor; color:white; }
+body.beach .kamer-pill { color:#00bfa5; }
+body.zonnestraal .kamer-pill { color:#ffcc00; }
+body.palace .kamer-pill { color:#d4af37; }
 
 /* Action buttons in one row */
 .buttons { display:flex; gap:0.5em; }

@@ -51,6 +51,37 @@ document.getElementById('randomCcBtn').addEventListener('click', () => {
 document.getElementById('kortingscode').addEventListener('input', updateBedrag);
 extraInput.addEventListener('input', updateBedrag);
 
+function setSelectedKamer(type) {
+  const hidden = document.getElementById('kamer');
+  hidden.value = type;
+  document.querySelectorAll('.kamer-pill').forEach(pill => {
+    if (pill.textContent === type) pill.classList.add('active');
+    else pill.classList.remove('active');
+  });
+  updateBedrag();
+}
+
+function createKamerPills() {
+  const container = document.getElementById('kamerPills');
+  Object.keys(kamerPrijzen).forEach(type => {
+    const pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = 'kamer-pill';
+    pill.textContent = type;
+    pill.addEventListener('click', () => {
+      const current = document.getElementById('kamer').value;
+      if (current === type) {
+        setSelectedKamer('');
+        if (currentRes) currentRes.kamer = '';
+      } else {
+        setSelectedKamer(type);
+        if (currentRes) currentRes.kamer = type;
+      }
+    });
+    container.appendChild(pill);
+  });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   currentHotel = 'beach';
   document.body.classList.add(currentHotel);
@@ -65,6 +96,8 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('employeeNameDisplay').textContent = medewerkerNaam || 'Naam medewerker';
   idPlaceholder.apply();
   ccPlaceholder.apply();
+  createKamerPills();
+  setSelectedKamer('');
 });
 
 document.getElementById('newResBtn').addEventListener('click', () => {
@@ -192,9 +225,8 @@ function openKamerSelectie() {
     const row = document.createElement('tr');
     row.innerHTML = `<td>${type}</td><td>${kamerPrijzen[type].beschrijving}</td><td>€ ${kamerPrijzen[type].prijs},-</td>`;
     row.addEventListener('click', () => {
-      document.getElementById('kamer').value = type;
+      setSelectedKamer(type);
       currentRes.kamer = type;
-      updateBedrag();
       document.getElementById('kamerSelectModal').classList.add('hidden');
     });
     table.appendChild(row);
@@ -339,7 +371,7 @@ function fillDetails(res) {
   document.getElementById('naam').value = res.naam;
   document.getElementById('gasten').value = res.gasten;
   document.getElementById('nachten').value = res.nachten;
-  document.getElementById('kamer').value = res.kamer;
+  setSelectedKamer(res.kamer);
   document.getElementById('etage').value = res.etage || '';
   document.getElementById('aankomst').value = res.aankomst || '';
   idInput.value = res.idNummer || '';
@@ -361,10 +393,10 @@ function updateBedrag() {
   const code = document.getElementById('kortingscode').value.trim();
   const discount = kortingsCodes[code] || 0;
   const bedrag = Math.max(0, base - discount);
-  document.getElementById('bedragDisplay').textContent = "Bedrag: € " + bedrag + ",-";
+  document.getElementById('bedragDisplay').innerHTML = "Bedrag:<br>€ " + bedrag + ",-";
   const extras = parseFloat(extraInput.value) || 0;
   const totaal = bedrag + extras;
-  document.getElementById('totaalDisplay').textContent = "Totaal: € " + totaal + ",-";
+  document.getElementById('totaalDisplay').innerHTML = "Totaal:<br>€ " + totaal + ",-";
   if (currentRes) {
     currentRes.extras = extras;
     currentRes.bedrag = bedrag;

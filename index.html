@@ -69,8 +69,9 @@
             <label>Aantal nachten:<br><input type="number" id="nachten" min="1" max="30"></label>
             <label>Kamernummer:<br><input type="text" id="kamerpas"></label>
             <label class="kamer-type">Type kamer:<br>
-              <input type="text" id="kamer" readonly>
-              <button type="button" id="selectKamerBtn"><span class="material-icons">search</span> Selecteren</button>
+              <input type="hidden" id="kamer">
+              <div id="kamerPills" class="kamer-pills"></div>
+              <button type="button" id="selectKamerBtn"><span class="material-icons">search</span> Meer info</button>
               <button type="button" id="upgradeBtn"><span class="material-icons">upgrade</span> Upgrade</button>
             </label>
             <label>Etage:<br><input type="number" id="etage" min="1" max="20"></label>
