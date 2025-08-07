@@ -17,6 +17,10 @@
     </div>
     <div class="header-right">
       <button type="button" id="newResBtn"><span class="material-icons">add</span></button>
+      <div id="searchContainer">
+        <input type="text" id="searchInput" placeholder="Zoeken...">
+        <button type="button" id="searchBtn"><span class="material-icons">search</span></button>
+      </div>
       <div id="userInfo"><span class="material-icons">person</span><span id="employeeNameDisplay">Naam medewerker</span></div>
     </div>
   </header>
@@ -28,12 +32,27 @@
       <div class="columns">
         <div class="left-col">
           <h2>Menu</h2>
-          <form id="zoekForm">
-            <label>Reserveringsnummer of naam:<br>
-              <input type="text" id="zoekTerm">
-            </label>
-            <button type="submit"><span class="material-icons">search</span> Zoeken</button>
-          </form>
+          <div id="calculator">
+            <input type="text" id="calcDisplay" readonly>
+            <div class="calc-buttons">
+              <button class="calc-btn">7</button>
+              <button class="calc-btn">8</button>
+              <button class="calc-btn">9</button>
+              <button class="calc-btn">/</button>
+              <button class="calc-btn">4</button>
+              <button class="calc-btn">5</button>
+              <button class="calc-btn">6</button>
+              <button class="calc-btn">*</button>
+              <button class="calc-btn">1</button>
+              <button class="calc-btn">2</button>
+              <button class="calc-btn">3</button>
+              <button class="calc-btn">-</button>
+              <button class="calc-btn">0</button>
+              <button class="calc-btn">C</button>
+              <button class="calc-btn">=</button>
+              <button class="calc-btn">+</button>
+            </div>
+          </div>
           <nav class="menu-nav">
             <button type="button" id="overviewBtn"><span class="material-icons">list</span> Overzicht reserveringen</button>
           </nav>

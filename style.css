@@ -53,6 +53,68 @@ body.beach button:hover { background-color: #009e8a; }
   font-size: 2em;
 }
 
+/* Zoek knop in header */
+#searchContainer {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+#searchBtn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  color: green;
+  padding: 0;
+}
+#searchBtn .material-icons {
+  color: green;
+  font-size: 2em;
+}
+#searchInput {
+  position: absolute;
+  right: 60px;
+  top: 0;
+  width: 0;
+  opacity: 0;
+  height: 60px;
+  border: none;
+  padding: 0;
+  border-radius: 30px 0 0 30px;
+  transition: width 0.3s, opacity 0.3s;
+}
+#searchContainer.active #searchInput {
+  width: 200px;
+  opacity: 1;
+  padding: 0 0.5em;
+  background: white;
+  border: 1px solid #757575;
+}
+#searchContainer.active #searchBtn {
+  border-radius: 0 30px 30px 0;
+}
+
+/* Rekenmachine */
+#calculator {
+  margin-top: 1em;
+}
+#calcDisplay {
+  width: 100%;
+  text-align: right;
+  padding: 0.4em;
+  border: 1px solid #757575;
+  border-radius: 4px;
+}
+.calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+.calc-buttons button {
+  width: 100%;
+}
+
 /* Placeholder stijl */
 input.placeholder-active {
   color: #888;

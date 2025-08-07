@@ -76,21 +76,60 @@ document.getElementById('newResBtn').addEventListener('click', () => {
   document.getElementById('detailView').classList.remove('hidden');
 });
 
-document.getElementById('zoekForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const term = document.getElementById('zoekTerm').value.trim();
-  if (!term) return;
-  let res = hotelData[term] || Object.values(hotelData).find(r => r.reserveringsnummer === term || r.naam.toLowerCase() === term.toLowerCase());
-  if (!res) {
-    res = generateReservation(term);
-    hotelData[term] = res;
-    saveData();
+const searchContainer = document.getElementById('searchContainer');
+const searchBtn = document.getElementById('searchBtn');
+const searchInput = document.getElementById('searchInput');
+
+function performSearch() {
+  const term = searchInput.value.trim();
+  if (!term) {
+    searchContainer.classList.remove('active');
+    return;
   }
-  currentRes = res;
-  fillDetails(res);
-  document.getElementById('detailsForm').classList.remove('hidden');
-  document.getElementById('overviewView').classList.add('hidden');
-  document.getElementById('detailView').classList.remove('hidden');
+  const res = hotelData[term] || Object.values(hotelData).find(r => r.reserveringsnummer === term || r.naam.toLowerCase() === term.toLowerCase());
+  if (res) {
+    currentRes = res;
+    fillDetails(res);
+    document.getElementById('detailsForm').classList.remove('hidden');
+    document.getElementById('overviewView').classList.add('hidden');
+    document.getElementById('detailView').classList.remove('hidden');
+  }
+  searchInput.value = '';
+  searchContainer.classList.remove('active');
+}
+
+searchBtn.addEventListener('click', () => {
+  if (!searchContainer.classList.contains('active')) {
+    searchContainer.classList.add('active');
+    searchInput.focus();
+  } else {
+    performSearch();
+  }
+});
+
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    performSearch();
+  }
+});
+
+const calcDisplay = document.getElementById('calcDisplay');
+document.querySelectorAll('.calc-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const val = btn.textContent;
+    if (val === 'C') {
+      calcDisplay.value = '';
+    } else if (val === '=') {
+      try {
+        calcDisplay.value = eval(calcDisplay.value) || '';
+      } catch {
+        calcDisplay.value = '';
+      }
+    } else {
+      calcDisplay.value += val;
+    }
+  });
 });
 
 document.getElementById('checkinBtn').addEventListener('click', () => {
